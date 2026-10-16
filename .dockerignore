@@ -1,0 +1,12 @@
+node_modules
+.next
+.git
+.agents
+.codex
+.aws
+.local
+.env*
+!.env.example
+*.tsbuildinfo
+test-results
+playwright-report

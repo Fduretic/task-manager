@@ -1,0 +1,61 @@
+version: 1
+compose: compose.yaml
+public:
+  service: web
+  port: 80
+routing:
+  pathPrefix: false
+services: []
+technologies:
+  - name: Next.js
+environment:
+  - key: APP_ORIGIN
+    description: The public HTTPS address used in invitation links and request origin checks.
+    required: true
+    secret: false
+    phase: runtime
+  - key: AUTH_SECRET
+    description: Stable random secret of at least 32 characters protecting authentication tokens.
+    required: true
+    secret: true
+    phase: runtime
+  - key: SMTP_HOST
+    description: SMTP hostname for invitation emails.
+    required: true
+    secret: false
+    phase: runtime
+  - key: SMTP_PORT
+    description: SMTP port; 465 uses TLS and other ports require STARTTLS.
+    required: true
+    secret: false
+    phase: runtime
+  - key: SMTP_USER
+    description: SMTP account username.
+    required: true
+    secret: false
+    phase: runtime
+  - key: SMTP_PASSWORD
+    description: SMTP credential or app password.
+    required: true
+    secret: true
+    phase: runtime
+  - key: MAIL_FROM
+    description: Sender email address allowed by the SMTP provider.
+    required: true
+    secret: false
+    phase: runtime
+  - key: POSTGRES_PASSWORD
+    description: Unique password for the private PostgreSQL database.
+    required: true
+    secret: true
+    phase: runtime
+storage: []
+database:
+  service: database
+  name: app
+  user: app
+  passwordEnv: POSTGRES_PASSWORD
+migration:
+  service: web
+  command: [node, scripts/migrate.mjs]
+schedules: []
